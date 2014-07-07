@@ -18,13 +18,12 @@ struct cltask
 	cl_kernel init;
 	cl_kernel kernel2;
 	
-	
 };
 
 struct gpu_data
 {
-	unsigned long size;
-	unsigned long 
+	unsigned long data_size;
+	void *tasks;	
 }
 
 
