@@ -90,6 +90,3 @@ cl_mem *cltask_get_pool(struct cltask *task_pool)
 }
 
 
-void cltask_print(struct cltask *task)
-{
-}

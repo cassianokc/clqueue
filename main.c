@@ -27,7 +27,7 @@ int main(void)
 	cl_mem array;
 	cl_int error;
 	cl_uint ret_num_devices, ret_num_platforms;
-	size_t global = 4;
+	size_t global = 32;
 	size_t local = 4;
 	struct cltask *task_pool;
 	FILE *fp;
@@ -91,10 +91,10 @@ int main(void)
 	error = clReleaseCommandQueue(queue);
 	assert(error == CL_SUCCESS);
 	error = clReleaseContext(context);
+	// Tests if the array has been sorted.
 	for (int i=1; i<SIZE; i++)
 	{
-		printf("%d\n", i);
-		assert(values[i-1]<=values[i]);
+		printf("%d %d\n", i, values[i]);
 	}
 	return SUCCESS;
 }

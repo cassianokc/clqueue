@@ -7,12 +7,11 @@
 #define TASK_READY 0
 
 #define DATA_SIZE 12
-#define SIZE 1024
+#define SIZE 128
 
 
 
 int LOCK(int x);
-
 int LOCK(int x)
 {
 	if (x==0)
@@ -52,12 +51,58 @@ struct pool
 };
 
 
+/*
+* 	Inits the scheduler data and inserts the first task.
+*	@param task_pool The struct to be initialized.
+*	@param first_task Pointer to the data of the first task that will be inserted in the scheduler.
+*/
 __kernel void cltask_gpu_init(global struct pool *task_pool, global unsigned char *first_task);
+
+/*
+*	Inserts a new task in the task pool.
+*	@param task_pool The struct that the task will be added.
+*	@param task Pointer to the data of the task that will be inserted in the scheduler.
+*	@param parent_offset The offset of the parent which is dependant of this newly inserted task.
+*	@return Returns 1 if the insertion was successfull, 0 otherwise.	
+*/
 int cltask_new_task(global struct pool *task_pool, void *task, int parent_offset);
+
+/*
+*	Removes a task from the task pool.
+*	@param task_pool The struct from which the task will be removed.
+*	@param task_offset The offset of the task in the task pool.
+*/
 void cltask_finish_task(global struct pool *task_pool, int task_offset);
+
+/*
+*	Retrieves a task from the task pool to be processed.
+*	@param task_pool The scheduler struct.	
+*	@param task_ret A pointer to a pointer in which will hold the task data.
+*	@param offset_ret A pointer to a int which will hold the offset of the task retrieved.
+*
+*/
 int cltask_retrieve_task(global struct pool *task_pool, global void **task_ret, int *offset_ret);
+
+/*
+* 	Makes a task given by its offset dependant of a number of tasks.
+*	@param task_pool The task pool which contain the task.
+*	@param offset The offset that identifies the task that will be dependant.
+*	@param dependants The number of dependant tasks spawned by the task identified by offset.
+*/
 void cltask_set_dependant(global struct pool *task_pool, int offset, int dependants);
+
+/*
+* 	A pseudo randomic number generator
+*	@param task_pool The task pool struct that contains the seeds for the random number.
+*	@return A pseudo randomic integer
+*/
 int rand(global struct pool *task_pool);
+
+/*
+*	Seeds the pseudo randomic generator.
+*	@param task_pool The struct which contains the seed.
+*	@param seed The seed.
+*/
 void srand(global struct pool *task_pool, int seed);
 
 
