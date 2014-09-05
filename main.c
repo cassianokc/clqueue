@@ -91,11 +91,6 @@ int main(void)
 	error = clReleaseCommandQueue(queue);
 	assert(error == CL_SUCCESS);
 	error = clReleaseContext(context);
-	// Tests if the array has been sorted.
-	for (int i=1; i<SIZE; i++)
-	{
-		printf("%d %d\n", i, values[i]);
-	}
 	return SUCCESS;
 }
 
